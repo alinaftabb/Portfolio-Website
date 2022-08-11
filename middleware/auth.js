@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const Users = require('../models/Users');
 
 module.exports = (req, res, next) => {
     //Get token from header

@@ -5,10 +5,7 @@ const config = require('config');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
-const {
-    check,
-    validationResult
-} = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
 // @ROUTE   POST API/USER
 // @DESC    REGISTER USER
@@ -34,7 +31,7 @@ router.post('/', [
     } = req.body;
 
     try {
-        //See if user exits
+        //See if user exists
         let user = await User.findOne({
             email
         });
