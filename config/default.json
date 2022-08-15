@@ -1,4 +1,6 @@
 {
-    "mongoURI": "mongodb+srv://Alinaaftab:Alina123.@firstwebsite.veaa5kx.mongodb.net/?retryWrites=true&w=majority",
-    "jwtSecret": "MySecretToken"
+  "mongoURI": "mongodb+srv://Alinaaftab:Alina123.@firstwebsite.veaa5kx.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "MySecretToken",
+  "githubClientId": "7e175a06d6df77430971",
+  "githubClientSecret": "11a42e95232cc142eea4a975f314cc6ff088cf2c"
 }
