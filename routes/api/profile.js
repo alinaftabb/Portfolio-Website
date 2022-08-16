@@ -115,7 +115,7 @@ router.get('/', async (req, res) => {
 });
 
 // @ROUTE   GET API/PROFILE/USER
-// @DESC    GET PROFILES OF ALL USERS
+// @DESC    GET PROFILES OF USERS BY ID
 // @ACCESS  PUBLIC
 router.get('/user/:user_id', async (req, res) => {
   try {
@@ -270,8 +270,8 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
   }
 });
 
-// @ROUTE   PUT API/PROFILE/EDUCATION
-// @DESC    ADD EDUCATION
+// @ROUTE   PUT API/PROFILE/GITHUB
+// @DESC    ADD GITHUB REPOS
 // @ACCESS  PRIVATE
 
 router.get('/github/:username', async (req, res) => {
