@@ -5,7 +5,7 @@ const config = require('config');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
-const { check, validationResult } = require("express-validator");
+const {check, validationResult} = require("express-validator");
 
 // @ROUTE   POST API/USER
 // @DESC    REGISTER USER
@@ -71,7 +71,7 @@ router.post('/', [
         jwt.sign(
             payload,
             config.get('jwtSecret'),
-            {   expiresIn: 36000    },
+            {expiresIn: 36000},
             (err, token) => {
                 if (err) throw err;
                 res.json({
