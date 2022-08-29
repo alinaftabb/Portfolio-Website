@@ -83,7 +83,7 @@ export const login =
             const body = JSON.stringify({email, password});
 
             try {
-                const res = await axios.post('/api/auth', body, config);
+                const res = await axios.post('/api/auth/', body, config);
 
                 dispatch({
                     type: LOGIN_SUCCESS,
@@ -91,10 +91,16 @@ export const login =
                 });
                 dispatch(loadUser());
             } catch (err) {
-                const errors = err.response.data.errors;
-
+                const errors = err.response.data.error;
+                console.log(errors, err.response.data)
                 if (errors) {
-                    errors.forEach(error => dispatch(setAlert(error.msg, 'danger', 5000)));
+                    if (Array.isArray(errors)) {
+
+                        errors.forEach(error => dispatch(setAlert(error.msg, 'danger', 5000)));
+                    } else {
+                        dispatch(setAlert(errors, 'danger', 5000));
+
+                    }
                 }
                 dispatch({
                     type: LOGIN_FAIL,
