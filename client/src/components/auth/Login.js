@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { login } from '../../actions/auth';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 export const Login = ({ login, isAuthenticated }) => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,7 +18,8 @@ export const Login = ({ login, isAuthenticated }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    login({ email, password });
+    console.log('Login');
+    dispatch(login({ email, password }));
   };
 
   //Redirect if logged in
