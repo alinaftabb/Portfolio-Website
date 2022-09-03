@@ -1,93 +1,103 @@
 import './App.css';
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
 } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import { Login } from './components/auth/Login';
+import {Login} from './components/auth/Login';
 import Alert from './components/layout/Alert';
-import CreateProfile from './components/profile-forms/CreateProfile';
-import { Register } from './components/auth/Register';
+import CreateProfile, {withRouter} from './components/profile-forms/CreateProfile';
+import {Register} from './components/auth/Register';
 import Dashboard from './components/dasboard/Dashboard';
-import React, { Fragment, useEffect } from 'react';
+import React, {Fragment, useEffect} from 'react';
 //redux
-import { Provider, useSelector } from 'react-redux';
+import {connect, Provider, useSelector} from 'react-redux';
 import store from './store';
-import { loadUser, login, register } from './actions/auth';
+import {loadUser, login, register} from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
-import { setAlert } from './actions/alert';
-import { getCurrentProfile } from './actions/profile';
+import {setAlert} from './actions/alert';
+import {createProfile, getCurrentProfile} from './actions/profile';
+import {useNavigate} from "react-router";
 
 if (localStorage.token) {
-  setAuthToken(localStorage.token);
+    setAuthToken(localStorage.token);
 } else {
-  <Navigate to={'/login'} />;
+    <Navigate to={'/login'}/>;
 }
 
 const App = () => {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+    useEffect(() => {
+        store.dispatch(loadUser());
+    }, []);
 
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    console.log(isAuthenticated);
+    const nav = useNavigate();
+    useEffect(() => {
 
-  const authenticatedRoutes = [
-    {
-      url: '/dashboard',
-      component: <Dashboard getCurrentProfile={getCurrentProfile} />,
-    },
-    {
-      url: '/create-profile',
-      component: <CreateProfile />,
-    },
-  ];
+        if (isAuthenticated) {
+            nav("/dashboard");
+        }
+    }, [])
 
-  const unAuthenticatedRoutes = [
-    { url: '/', component: <Landing /> },
-    {
-      url: '/register',
-      component: <Register register={register} setAlert={setAlert} />,
-    },
-    { url: '/login', component: <Login login={login} /> },
-  ];
+    const authenticatedRoutes = [
+        {
+            url: '/dashboard',
+            component: <Dashboard getCurrentProfile={getCurrentProfile}/>,
+        },
+        {
+            url: '/create-profile',
+            component: <CreateProfile/>,
+        },
+    ];
 
-  return (
-    <Router>
-      <Fragment>
-        <Navbar />
-        <section className='container'>
-          <Alert />
-          <Routes>
-            {isAuthenticated ? (
-              <>
-                {authenticatedRoutes.map((data, i) => (
-                  <Route
-                    key={i}
-                    exact
-                    path={`/${data.url}`}
-                    element={data.component}
-                  />
-                ))}
-              </>
-            ) : (
-              unAuthenticatedRoutes.map((data, i) => (
-                <Route
-                  key={i}
-                  exact
-                  path={`/${data.url}`}
-                  element={data.component}
-                />
-              ))
-            )}
-          </Routes>
-        </section>
-      </Fragment>
-    </Router>
-  );
+    const unAuthenticatedRoutes = [
+        {url: '/', component: <Landing/>},
+        {
+            url: '/register',
+            component: <Register register={register} setAlert={setAlert}/>,
+        },
+        {url: '/login', component: <Login login={login}/>},
+    ];
+
+    return (
+
+        <Fragment>
+            <Navbar/>
+            <section className='container'>
+                <Alert/>
+                <Routes>
+                    {isAuthenticated ? (
+                        <>
+                            {authenticatedRoutes.map((data, i) => (
+                                <Route
+                                    key={i}
+                                    exact
+                                    path={`/${data.url}`}
+                                    element={data.component}
+                                />
+                            ))}
+                        </>
+                    ) : (
+                        unAuthenticatedRoutes.map((data, i) => (
+                            <Route
+                                key={i}
+                                exact
+                                path={`/${data.url}`}
+                                element={data.component}
+                            />
+                        ))
+                    )}
+                </Routes>
+            </section>
+        </Fragment>
+
+    );
 };
 
-export default App;
+export default connect(null, null)(
+    withRouter(App)
+);
