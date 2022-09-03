@@ -1,5 +1,5 @@
-const express = require("express");
-const connectDB = require("./config/db");
+const express = require('express');
+const connectDB = require('./config/db');
 var logger = require('morgan');
 const app = express();
 
@@ -7,7 +7,7 @@ const app = express();
 connectDB();
 app.use(logger('dev'));
 // app.use(logger('combined'))
-app.use(express.json({extended: false}));
+app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send(`API Running..`));
 
