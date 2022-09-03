@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { login } from '../../actions/auth';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 export const Login = ({ login, isAuthenticated }) => {
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,7 +20,18 @@ export const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     console.log('Login');
-    dispatch(login({ email, password }));
+    dispatch(
+      login(
+        {
+          email,
+          password,
+        },
+        () => {
+          console.log('In CB');
+          nav('/dashboard');
+        }
+      )
+    );
   };
 
   //Redirect if logged in
@@ -29,9 +41,9 @@ export const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign Up</h1>
+      <h1 className='large text-primary'>Log In</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i> Create Your Account
+        <i className='fas fa-user'></i> LogIn To Your Account
       </p>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>

@@ -10,7 +10,7 @@ import {
   LOGOUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 //Load User
 export const loadUser = () => async dispatch => {
@@ -72,7 +72,7 @@ export const register =
 
 //Login User
 export const login =
-  ({ email, password }) =>
+  ({ email, password }, cb) =>
   async dispatch => {
     const config = {
       headers: {
@@ -90,6 +90,7 @@ export const login =
         payload: res.data,
       });
       dispatch(loadUser());
+      if (cb) cb();
     } catch (err) {
       const errors = err.response.data.errors;
 

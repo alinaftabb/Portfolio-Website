@@ -1,18 +1,23 @@
-import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({
-  getCurrentProfile,
-  auth: { user },
-  profile: { profile, loading },
-}) => {
+const Dashboard = ({ getCurrentProfile, auth: { user }, profile }) => {
+  const [pro, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  if (profile) {
+    setProfile(profile?.profile);
+    setLoading(profile?.loading);
+  }
+
   useEffect(() => {
     getCurrentProfile();
   }, []);
+
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -21,7 +26,7 @@ const Dashboard = ({
       <p className='lead'>
         <i className='fas fa-user'></i> Welcome {user && user.name}
       </p>
-      {profile !== null ? (
+      {pro !== null ? (
         <Fragment>YES</Fragment>
       ) : (
         <Fragment>
