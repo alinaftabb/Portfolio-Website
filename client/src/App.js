@@ -11,6 +11,8 @@ import { Login } from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dasboard/Dashboard';
 import AddExperience from './components/profile-forms/AddExperience';
+import AddEducation from './components/profile-forms/AddEducation';
+import Profiles from './components/profiles/Profiles';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import { Register } from './components/auth/Register';
@@ -19,9 +21,9 @@ import React, { Fragment, useEffect } from 'react';
 import { connect, Provider, useSelector } from 'react-redux';
 import store from './store';
 import { loadUser, login, register } from './actions/auth';
+import { getProfiles } from './actions/profile';
 import setAuthToken from './utils/setAuthToken';
 import { setAlert } from './actions/alert';
-import { createProfile } from './actions/profile';
 import { useNavigate } from 'react-router';
 
 if (localStorage.token) {
@@ -61,6 +63,10 @@ const App = () => {
       url: '/add-experience',
       component: <AddExperience />,
     },
+    {
+      url: '/add-education',
+      component: <AddEducation />,
+    },
   ];
 
   const unAuthenticatedRoutes = [
@@ -70,6 +76,7 @@ const App = () => {
       component: <Register register={register} setAlert={setAlert} />,
     },
     { url: '/login', component: <Login login={login} /> },
+    { url: '/profiles', component: <Profiles getProfiles={getProfiles} /> },
   ];
 
   return (
