@@ -67,6 +67,10 @@ const App = () => {
       url: '/add-education',
       component: <AddEducation />,
     },
+    {
+      url: '/profiles',
+      component: <Profiles />,
+    },
   ];
 
   const unAuthenticatedRoutes = [
