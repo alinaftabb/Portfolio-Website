@@ -1,10 +1,5 @@
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import { Login } from './components/auth/Login';
@@ -13,15 +8,17 @@ import Dashboard from './components/dasboard/Dashboard';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import { Register } from './components/auth/Register';
+import Posts from './components/posts/Posts';
 import React, { Fragment, useEffect } from 'react';
 //redux
-import { connect, Provider, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import store from './store';
 import { loadUser, login, register } from './actions/auth';
-import { getProfiles } from './actions/profile';
+import { getProfileById, getProfiles } from './actions/profile';
 import setAuthToken from './utils/setAuthToken';
 import { setAlert } from './actions/alert';
 import { useNavigate } from 'react-router';
@@ -71,6 +68,14 @@ const App = () => {
       url: '/profiles',
       component: <Profiles />,
     },
+    {
+      url: '/profile/:id',
+      component: <Profile getProfileById={getProfileById} />,
+    },
+    {
+      url: '/posts',
+      component: <Posts />,
+    },
   ];
 
   const unAuthenticatedRoutes = [
@@ -81,6 +86,10 @@ const App = () => {
     },
     { url: '/login', component: <Login login={login} /> },
     { url: '/profiles', component: <Profiles getProfiles={getProfiles} /> },
+    {
+      url: '/profile/:id',
+      component: <Profile getProfileById={getProfileById} />,
+    },
   ];
 
   return (

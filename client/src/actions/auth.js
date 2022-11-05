@@ -10,7 +10,6 @@ import {
   LOGOUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
-import { Navigate, useNavigate } from 'react-router-dom';
 
 //Load User
 export const loadUser = () => async dispatch => {

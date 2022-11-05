@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export const withRouter = Component => {
   const Wrapper = props => {
@@ -80,7 +80,7 @@ const EditProfile = ({
       youtube: loading || !profile.youtube ? '' : profile.youtube,
       instagram: loading || !profile.instagram ? '' : profile.instagram,
     });
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
   return (
     <Fragment>
